@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Achievement and Progress bar</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+
+<div class="container mt-5">
+
+    <div class="row">
+
+        <!-- Achievements List -->
+        <div class="row">
+            <h3>Achievements</h3>
+            <hr>
+            <div class="row">
+                {% for achievement in achievements %}
+                <div class="col-lg-6 col-md-6 col-sm-12 mb-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">{{ achievement.name }}</h5>
+                            <p class="card-text">{{ achievement.desc }}</p>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">Level {{ achievement.level }}</p>
+                            <p class="card-text">{{ achievement.tonext }} points to next level</p>
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-striped bg-success" role="progressbar"
+                                     style="width: {{ achievement.tonext/4 }}%" aria-valuenow="{{ achievement.tonext }}"
+                                     aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="row">
+            <h3>Progress Bar</h3>
+            <hr>
+            <p>{{ current_xp }} XP / {{ max_xp }} XP</p>
+            <div class="progress">
+                <div class="progress-bar progress-bar-striped bg-primary" role="progressbar"
+                     style="width: {{ (current_xp / max_xp)*100 }}%" aria-valuenow="{{ current_xp }}" aria-valuemin="0"
+                     aria-valuemax="100"></div>
+                {% for goal in goals %}
+                <div class="progress-bar progress-bar-striped bg-secondary" role="progressbar"
+                     style="width: {{ goal.xp/max_xp*100 }}%; left: {{ goal.xp/max_xp*100 }}%"
+                     aria-valuenow="{{ goal.xp }}" aria-valuemin="0" aria-valuemax="{{ max_xp }}">{{ goal.name }}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>
