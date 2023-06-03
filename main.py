@@ -2,37 +2,33 @@ from flask import Flask, render_template
 
 app = Flask(__name__)
 
-achievements = [
-    {"name": "First Achievement", "desc": "This is the description of the first achievement", "lvl": 1, "txp": 50, "img": "static/test.jpg"},
-    {"name": "Second Achievement", "desc": "This is the description of the second achievement", "lvl": 2, "txp": 100, "img": "static/test.jpg"},
-    {"name": "Third Achievement", "desc": "This is the description of the third achievement", "lvl": 3, "txp": 150, "img": "static/test.jpg"},
-    {"name": "Fourth Achievement", "desc": "This is the description of the fourth achievement", "lvl": 4, "txp": 200, "img": "static/test.jpg"},
-    {"name": "Fifth Achievement", "desc": "This is the description of the fifth achievement", "lvl": 5, "txp": 500, "img": "static/test.jpg"}
-]
-
-achieved = [
-    {"name": "First Achievement", "xp": 25},
-    {"name": "Second Achievement", "xp": 76},
-    {"name": "Third Achievement", "xp": 124},
-]
-
-not_achieved = [
-    {"name": "Fourth Achievement", "xp": 230},
-    {"name": "Fifth Achievement", "xp": 280},
-]
-
-#Глобал
-current_xp = 350
-max_xp = 5000
-
-#До следуещей ачивки
-next_lvl_xp = 500
-current_lvl_xp = 250
-
-@app.route("/")
+@app.route('/')
 def index():
-    return render_template("index.html", achievements=achievements, achieved=achieved, not_achieved=not_achieved,
-        current_xp=current_xp, next_lvl_xp=next_lvl_xp)
+    available_awards = [
+        { 'name': 'Награда 1', 'desc': 'Описание награды 1', 'img': 'путь_к_изображению_1' },
+        { 'name': 'Награда 2', 'desc': 'Описание награды 2', 'img': 'путь_к_изображению_2' },
+        # Добавьте остальные награды в соответствии с вашими данными
+    ]
 
-if __name__ == "__main__":
-    app.run(debug=True)
+    received_awards = [
+        { 'name': 'Награда 3', 'desc': 'Описание награды 3', 'img': 'путь_к_изображению_3' },
+        { 'name': 'Награда 4', 'desc': 'Описание награды 4', 'img': 'путь_к_изображению_4' },
+        # Добавьте остальные награды в соответствии с вашими данными
+    ]
+
+    progress_bars = [
+        { 'name': 'Прогресс 1', 'desc': 'Описание прогресса 1', 'max': 100, 'cur': 75 },
+        { 'name': 'Прогресс 2', 'desc': 'Описание прогресса 2', 'max': 200, 'cur': 150 },
+        # Добавьте остальные прогресс-бары в соответствии с вашими данными
+    ]
+
+    unclaimed_awards = [
+        { 'name': 'Награда 5', 'desc': 'Описание награды 5' },
+        { 'name': 'Награда 6', 'desc': 'Описание награды 6' },
+        # Добавьте остальные награды, которые не получены
+    ]
+
+    return render_template('index.html', available_awards=available_awards, received_awards=received_awards, progress_bars=progress_bars, unclaimed_awards=unclaimed_awards)
+
+if __name__ == '__main__':
+    app.run()
