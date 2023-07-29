@@ -1,8 +1,9 @@
 import os
 import flet as ft
-from loger import EventLogger
+from loger import Logger
 from time import time, sleep
-from render import render_people_data
+from app import App
+from time import time
 
 start_time = time()
 
@@ -25,29 +26,27 @@ lvl_colors = [{"bg": "#312D66", "txt": "#B1ADEA", "border": "#6E65E6", "clprogr"
               {"bg": "#5E807B", "txt": "#97CCC4", "border": "#419588", "clprogr": "#4FC9B6", "bgprogr": "#394D4A"},
               {"bg": "#71805E", "txt": "#B4CC97", "border": "#6F9541", "clprogr": "#A9DD68", "bgprogr": "#444D39"}]
 
-glob = {"txt": "TEBE POPA TOCHNA",
-        "max": 1500,
-        "cur": 750,
-        "bg": "",
-        "bord": "",
-        "txt_color": "",
-        "pb_bg": "",
-        "pb_cl": ""}
-
 background = "#4D4B66"
 
-loger = EventLogger()
+loger = Logger(f"log/{time()}.log")
 
 os.environ["FLET_WS_MAX_MESSAGE_SIZE"] = "8000000"
 
 
-def main(page: ft.Page):
+def start(page: ft.Page):
+    page.title = "ToDo App"
+    page.horizontal_alignment = "center"
+    page.scroll = "adaptive"
+    page.update()
     loger.info(f"Preload time: {time() - start_time}")
-    page = render_people_data(page, loger, background, achivs, lvl_colors, glob)
+    app = App(loger, achivs, lvl_colors)
+    content = app.build()
+    print(content)
+    page.add(content)
     page.update()
 
 
 
-ft.app(target=main)
+ft.app(target=start)
 
 loger.info("Session stopped")
