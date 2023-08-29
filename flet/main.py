@@ -2,8 +2,8 @@ import os
 import flet as ft
 from loger import Logger
 from time import time, sleep
-from app import App
-from time import time
+from flet_classes import Content_render, Main_Animator
+import logging
 
 start_time = time()
 
@@ -28,23 +28,42 @@ lvl_colors = [{"bg": "#312D66", "txt": "#B1ADEA", "border": "#6E65E6", "clprogr"
 
 background = "#4D4B66"
 
-loger = Logger(f"log/{time()}.log")
+loger = Logger(f"log/{round(time())}.log")
 
 os.environ["FLET_WS_MAX_MESSAGE_SIZE"] = "8000000"
 
 
 def start(page: ft.Page):
-    page.title = "ToDo App"
+    page.title = "School Bank"
     page.horizontal_alignment = "center"
     page.scroll = "adaptive"
     page.update()
     loger.info(f"Preload time: {time() - start_time}")
-    app = App(loger, achivs, lvl_colors)
-    content = app.build()
-    print(content)
-    page.add(content)
-    page.update()
 
+    сontent_render = Content_render(loger)
+    main_frame = Main_Animator(loger, сontent_render.build_people_dt(achivs, lvl_colors))
+
+    page.add(main_frame.get())
+    page.update()
+    while True:
+        main_frame.change(сontent_render.build_people_dt(achivs, lvl_colors))
+        sleep(1)
+        main_frame.change(ft.Text(
+            "Size 50, Normal",
+            size=50,
+            color=ft.colors.WHITE,
+            bgcolor=ft.colors.ORANGE_800,
+            weight=ft.FontWeight.NORMAL,
+        ))
+        sleep(1)
+        main_frame.change(ft.Text(
+            "Size 2",
+            size=50,
+            color=ft.colors.WHITE,
+            bgcolor=ft.colors.ORANGE_800,
+            weight=ft.FontWeight.NORMAL,
+        ))
+        sleep(1)
 
 
 ft.app(target=start)
