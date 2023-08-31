@@ -2,7 +2,7 @@ import os
 import flet as ft
 from loger import Logger
 from time import time, sleep
-from flet_classes import Content_render, Main_Animator
+from flet_classes import Content_render, Animator
 import logging
 
 start_time = time()
@@ -37,11 +37,12 @@ def start(page: ft.Page):
     page.title = "School Bank"
     page.horizontal_alignment = "center"
     page.scroll = "adaptive"
+
     page.update()
     loger.info(f"Preload time: {time() - start_time}")
 
     сontent_render = Content_render(loger)
-    main_frame = Main_Animator(loger, сontent_render.build_people_dt(achivs, lvl_colors))
+    main_frame = Animator(loger, сontent_render.build_people_dt(achivs, lvl_colors))
 
     page.add(main_frame.get())
     page.update()
@@ -56,6 +57,7 @@ def start(page: ft.Page):
             weight=ft.FontWeight.NORMAL,
         ))
         sleep(1)
+        page.appbar = None
         main_frame.change(ft.Text(
             "Size 2",
             size=50,

@@ -8,7 +8,7 @@ from time import time
 from typing import Any
 
 
-class Main_Animator:
+class Animator:
     def __init__(self, loger: Logger, start_element: Any):
         self.animator = AnimatedSwitcher(
             start_element,
